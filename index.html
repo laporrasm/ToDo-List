@@ -1,34 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<script src="https://kit.fontawesome.com/fc7973c23c.js" crossorigin="anonymous"></script>
-		<link rel="stylesheet" href="main.css">
-		<link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
-    <title>To-Do List</title>
-</head>
-<body>
-    <div class="container">
+	<head>
+		<!-- Meta -->
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>To-Do List</title>
+
+		<!-- Font Awesome Icons Script -->
+		<script
+			src="https://kit.fontawesome.com/fc7973c23c.js"
+			crossorigin="anonymous"
+		></script>
+
+		<!-- Style Sheet Link -->
+		<link rel="stylesheet" href="main.css" />
+
+		<!-- Google Font -->
+		<link
+			href="https://fonts.googleapis.com/css?family=Nunito&display=swap"
+			rel="stylesheet"
+		/>
+
+		<!-- Vue Script -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	</head>
+	<body>
+		<div id="To-Do-App" class="container">
 			<h1 class="title">To-Do List</h1>
 
 			<div class="add-task">
-				<input class="add-task__input" type="text" placeholder="Add Task">
-				<button class="add-task__button"><i class="fas fa-plus"></i></button>
-			</div>
+				<input
+					class="add-task__input"
+					type="text"
+					placeholder="Add Task"
+					v-model="input"
+					v-on:keyup.enter="addTask()"
+				/>
+				<button v-on:click="addTask()" class="add-task__button">
+					<i class="fas fa-plus"></i>
+				</button>
+			</div>			
 
-			<div class="incomplete-tasks">
-			</div>
-
-			<div class="completed-tasks inactive">
-			</div>
-			
 			<div class="show">
-				<p class="show__incomplete">Show Incomplete</p>
-				<p class="show__completed">Show Completed</p>
+				<div><span>{{tasksLeft}}</span> tasks left</div>
+				<p
+					v-if="tasksList.length != tasksLeft"
+					class="show__button"
+					:class="{'show__button--active' : displayCompleted}"
+					v-on:click="changeDisplay(true)"
+				>
+					Show Completed
+				</p>
+				<p
+					v-if="tasksLeft"
+					class="show__button"
+					:class="{'show__button--active' : !displayCompleted}"
+					v-on:click="changeDisplay(false)"
+				>
+					Show Incomplete
+				</p>
 			</div>
 
+			<div class="tasks-container">
+				<div
+					class="task"
+					:class="{ 'task--done': task.done }"
+					v-for="task in shownTasks"
+					:key="task.id"
+				>
+					<div class="task__inner">
+						<div v-on:click="toggleDone(task.id)" class="task__doneButton">
+							<span class="task__doneButton-filler"></span>
+						</div>
+						<p class="task__text">{{task.text}}</p>
+						<div class="task__deleteButton" v-on:click="deleteTask(task.id)">
+							<i class="fas fa-times-circle"></i>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 		<script src="main.js"></script>
-</body>
+	</body>
 </html>

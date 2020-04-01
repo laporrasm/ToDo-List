@@ -1,20 +1,19 @@
 body {
   height: 100vh;
   margin: 0;
-  padding: 2em 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   background: -webkit-gradient(linear, left bottom, left top, from(#a8c0ff), to(#3f2b96));
   background: linear-gradient(to top, #a8c0ff, #3f2b96);
-  font-family: 'Nunito', Arial;
+  font-family: "Nunito", Arial;
 }
 
 .container {
   max-width: 760px;
   width: 90%;
-  margin: 0 auto;
-  background-color: white;
+  margin: 2em auto;
   padding: 1.5em;
+  background-color: white;
   border-radius: 15px;
   -webkit-box-shadow: 0px 0px 1px 10px rgba(0, 0, 0, 0.1);
           box-shadow: 0px 0px 1px 10px rgba(0, 0, 0, 0.1);
@@ -33,13 +32,14 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  margin-bottom: 2em;
   color: white;
   border-radius: 15px;
 }
 
 .add-task__input {
-  width: 80%;
-  padding: .75em 2em;
+  width: 85%;
+  padding: 0.75em 1em;
   background-color: #f0f0f0;
   font-family: inherit;
   font-size: inherit;
@@ -84,70 +84,95 @@ body {
 }
 
 .show {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
-  font-size: .8rem;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[6];
+      grid-template-columns: repeat(6, 1fr);
+  font-size: 0.9rem;
   color: #c7c7c7;
 }
 
-.show__completed, .show__incomplete {
+.show__button {
   margin: 0;
+  text-align: right;
   cursor: pointer;
+  -webkit-transition: color 350ms;
+  transition: color 350ms;
 }
 
-.show__completed:hover, .show__incomplete:hover {
+.show__button:first-of-type {
+  grid-column: -3 / -2;
+}
+
+.show__button:last-of-type {
+  grid-column: -2 / -1;
+}
+
+.show__button:hover, .show__button--active {
+  color: black;
+  -webkit-transition: color 350ms;
+  transition: color 350ms;
+}
+
+.show span {
+  font-weight: bold;
   color: black;
 }
 
-@-webkit-keyframes heightAnimation {
-  from {
-    max-height: 0;
-  }
-  to {
-    max-height: 300px;
-  }
-}
-
-@keyframes heightAnimation {
-  from {
-    max-height: 0;
-  }
-  to {
-    max-height: 300px;
-  }
-}
-
-.incomplete-tasks, .completed-tasks {
-  padding: 1.5em;
-}
-
-.completed-tasks .task__text {
-  text-decoration: line-through;
-  color: #c7c7c7;
-}
-
-.completed-tasks .task__doneButton-filler {
-  background-color: #c7c7c7;
+.tasks-container {
+  position: relative;
+  margin: 2em 0 0;
 }
 
 .inactive {
   display: none;
 }
 
+@-webkit-keyframes heightAnimation {
+  0% {
+    max-height: 0;
+  }
+  50% {
+    max-height: 20px;
+  }
+  100% {
+    max-height: 1000px;
+  }
+}
+
+@keyframes heightAnimation {
+  0% {
+    max-height: 0;
+  }
+  50% {
+    max-height: 20px;
+  }
+  100% {
+    max-height: 1000px;
+  }
+}
+
 .task {
-  padding: .75em 0;
+  margin: 0.25em 0;
+  padding: 0.75em 1em;
   border-radius: 5px;
+  background-color: #f0f0f0;
+  overflow: hidden;
   -webkit-animation-name: heightAnimation;
           animation-name: heightAnimation;
-  -webkit-animation-duration: 2s;
-          animation-duration: 2s;
+  -webkit-animation-duration: 500ms;
+          animation-duration: 500ms;
   -webkit-animation-timing-function: linear;
           animation-timing-function: linear;
-  overflow: hidden;
+}
+
+.task--done .task__text {
+  text-decoration: line-through;
+  color: #c7c7c7;
+}
+
+.task--done .task__doneButton-filler {
+  background-color: #c7c7c7;
 }
 
 .task__inner {
@@ -174,26 +199,21 @@ body {
   background-color: inherit;
   border: none;
   outline: none;
-  font-size: .9em;
+  font-size: 0.9em;
   font-family: inherit;
 }
 
 .task__doneButton {
   height: 1em;
   width: 1em;
-  margin-right: .5em;
-  text-align: center;
+  margin-right: 0.5em;
   background-color: white;
-  border: .15em solid #c7c7c7;
+  border: 0.15em solid #c7c7c7;
   border-radius: 50%;
   cursor: pointer;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -204,8 +224,8 @@ body {
 
 .task__doneButton-filler {
   display: inline-block;
-  height: .85em;
-  width: .85em;
+  height: 90%;
+  width: 90%;
   background-color: inherit;
   border-radius: 50%;
 }
@@ -215,12 +235,12 @@ body {
 }
 
 .task:hover .task__deleteButton {
-  display: inline-block;
+  visibility: visible;
 }
 
 .task__deleteButton {
-  display: none;
-  margin-left: .5em;
+  visibility: hidden;
+  margin-left: 0.5em;
   font-size: 1.25em;
   padding: 0;
   text-align: center;

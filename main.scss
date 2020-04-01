@@ -1,20 +1,19 @@
 body {
 	height: 100vh;
 	margin: 0;
-	padding: 2em 0;
 	box-sizing: border-box;
-	background: linear-gradient(to top, #a8c0ff, #3f2b96);;
-	font-family: 'Nunito', Arial;
+	background: linear-gradient(to top, #a8c0ff, #3f2b96);
+	font-family: "Nunito", Arial;
 }
 
 .container {
 	max-width: 760px;
 	width: 90%;
-	margin: 0 auto;
-	background-color: white;
+	margin: 2em auto;
 	padding: 1.5em;
+	background-color: white;
 	border-radius: 15px;
-	box-shadow: 0px 0px 1px 10px rgba($color: #000000, $alpha: .1);
+	box-shadow: 0px 0px 1px 10px rgba($color: #000000, $alpha: 0.1);
 }
 
 .title {
@@ -26,12 +25,13 @@ body {
 .add-task {
 	display: flex;
 	justify-content: space-between;
+	margin-bottom: 2em;
 	color: white;
 	border-radius: 15px;
-	
+
 	&__input {
-		width: 80%;
-		padding: .75em 2em;
+		width: 85%;
+		padding: 0.75em 1em;
 		background-color: #f0f0f0;
 		font-family: inherit;
 		font-size: inherit;
@@ -51,7 +51,9 @@ body {
 		border-radius: 5px;
 		transition: background-color 500ms;
 
-		i { transition: transform 500ms;	}
+		i {
+			transition: transform 500ms;
+		}
 
 		&:hover {
 			background-color: #3f2b96;
@@ -66,55 +68,76 @@ body {
 }
 
 .show {
-	display: flex;
-	justify-content: space-evenly;
-	font-size: .8rem;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	font-size: 0.9rem;
 	color: #c7c7c7;
 
-	&__completed, &__incomplete {
+	&__button {
 		margin: 0;
+		text-align: right;
 		cursor: pointer;
+		transition: color 350ms;
 
-		&:hover {
+		&:first-of-type {	grid-column: -3 / -2;	}
+
+		&:last-of-type { grid-column: -2 / -1; }
+
+		&:hover,
+		&--active {
 			color: black;
+			transition: color 350ms;
 		}
 	}
+
+	span {
+		font-weight: bold;
+		color: black;
+	}
+}
+
+.tasks-container {
+	position: relative;
+	margin: 2em 0 0;
+}
+
+.inactive {
+	display: none;
 }
 
 @keyframes heightAnimation {
-	from {
+	0% {
 		max-height: 0;
 	}
-	to {
-		max-height: 300px;
+	50% {
+		max-height: 20px;
+	}
+	100% {
+		max-height: 1000px;
 	}
 }
 
-.incomplete-tasks, .completed-tasks {
-	// margin-top: 2em;
-	padding: 1.5em;
-}
-
-.completed-tasks {
-	.task__text {
-		text-decoration: line-through;
-		color: #c7c7c7;
-	}
-
-	.task__doneButton-filler {
-		background-color: #c7c7c7;
-	}
-}
-
-.inactive { display: none; }
 
 .task {
-	padding: .75em 0;
+	margin: 0.25em 0;
+	padding: 0.75em 1em;
 	border-radius: 5px;
+	background-color: #f0f0f0;
+	overflow: hidden;	
 	animation-name: heightAnimation;
-	animation-duration: 2s;
+	animation-duration: 500ms;
 	animation-timing-function: linear;
-	overflow: hidden;
+
+	&--done {
+		.task__text {
+			text-decoration: line-through;
+			color: #c7c7c7;
+		}
+	
+		.task__doneButton-filler {
+			background-color: #c7c7c7;
+		}
+	}
 
 	&__inner {
 		display: flex;
@@ -132,44 +155,44 @@ body {
 		background-color: inherit;
 		border: none;
 		outline: none;
-		font-size: .9em;
+		font-size: 0.9em;
 		font-family: inherit;
 	}
 
 	&__doneButton {
 		height: 1em;
 		width: 1em;
-		margin-right: .5em;
-		text-align: center;
+		margin-right: 0.5em;
 		background-color: white;
-		border: .15em solid #c7c7c7;
+		border: 0.15em solid #c7c7c7;
 		border-radius: 50%;
 		cursor: pointer;
 		display: flex;
-		flex-direction: column;
 		justify-content: center;
 		align-items: center;
 
 		&-filler {
 			display: inline-block;
-			height: .85em;
-			width: .85em;
+			height: 90%;
+			width: 90%;
 			background-color: inherit;
 			border-radius: 50%;
 
-			&:hover { background-color: #c7c7c7; }
+			&:hover {
+				background-color: #c7c7c7;
+			}
 		}
 	}
 
 	&:hover {
 		.task__deleteButton {
-			display: inline-block;
+			visibility: visible;
 		}
 	}
 
 	&__deleteButton {
-		display: none;
-		margin-left: .5em;
+		visibility: hidden;
+		margin-left: 0.5em;
 		font-size: 1.25em;
 		padding: 0;
 		text-align: center;
@@ -177,6 +200,8 @@ body {
 		color: #c7c7c7;
 		cursor: pointer;
 
-		&:hover {	color: red; }
+		&:hover {
+			color: red;
+		}
 	}
 }
