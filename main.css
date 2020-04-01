@@ -83,45 +83,10 @@ body {
   transition: transform 500ms, -webkit-transform 500ms;
 }
 
-.show {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (1fr)[6];
-      grid-template-columns: repeat(6, 1fr);
-  font-size: 0.9rem;
-  color: #c7c7c7;
-}
-
-.show__button {
-  margin: 0;
-  text-align: right;
-  cursor: pointer;
-  -webkit-transition: color 350ms;
-  transition: color 350ms;
-}
-
-.show__button:first-of-type {
-  grid-column: -3 / -2;
-}
-
-.show__button:last-of-type {
-  grid-column: -2 / -1;
-}
-
-.show__button:hover, .show__button--active {
-  color: black;
-  -webkit-transition: color 350ms;
-  transition: color 350ms;
-}
-
-.show span {
-  font-weight: bold;
-  color: black;
-}
-
-.tasks-container {
-  position: relative;
+.tasks-placeholder {
   margin: 2em 0 0;
+  text-align: center;
+  color: #6f6f6f;
 }
 
 .inactive {
@@ -153,7 +118,7 @@ body {
 }
 
 .task {
-  margin: 0.25em 0;
+  margin: .25em 0;
   padding: 0.75em 1em;
   border-radius: 5px;
   background-color: #f0f0f0;
@@ -251,5 +216,42 @@ body {
 
 .task__deleteButton:hover {
   color: red;
+}
+
+.tab {
+  cursor: pointer;
+  padding: .5em 1em .25em;
+  font-size: .95em;
+  color: #cacaca;
+}
+
+.tab__container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-top: 2em;
+}
+
+.tab--active {
+  color: black;
+  border-bottom: .25em solid #3f2b96;
+}
+
+.features {
+  margin-top: 1em;
+  text-align: right;
+}
+
+.features__pending-count {
+  font-size: .95em;
+  color: #cacaca;
+}
+
+.features__pending-count span {
+  color: black;
+  font-weight: bold;
 }
 /*# sourceMappingURL=main.css.map */

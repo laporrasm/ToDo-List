@@ -67,38 +67,10 @@ body {
 	}
 }
 
-.show {
-	display: grid;
-	grid-template-columns: repeat(6, 1fr);
-	font-size: 0.9rem;
-	color: #c7c7c7;
-
-	&__button {
-		margin: 0;
-		text-align: right;
-		cursor: pointer;
-		transition: color 350ms;
-
-		&:first-of-type {	grid-column: -3 / -2;	}
-
-		&:last-of-type { grid-column: -2 / -1; }
-
-		&:hover,
-		&--active {
-			color: black;
-			transition: color 350ms;
-		}
-	}
-
-	span {
-		font-weight: bold;
-		color: black;
-	}
-}
-
-.tasks-container {
-	position: relative;
+.tasks-placeholder {
 	margin: 2em 0 0;
+	text-align: center;
+	color: #6f6f6f;
 }
 
 .inactive {
@@ -119,7 +91,7 @@ body {
 
 
 .task {
-	margin: 0.25em 0;
+	margin: .25em 0;
 	padding: 0.75em 1em;
 	border-radius: 5px;
 	background-color: #f0f0f0;
@@ -202,6 +174,39 @@ body {
 
 		&:hover {
 			color: red;
+		}
+	}
+}
+
+.tab {
+	cursor: pointer;
+	padding: .5em 1em .25em;
+	font-size: .95em;
+	color: #cacaca;
+
+	&__container {
+		display: flex;
+		justify-content: center;	
+		margin-top: 2em;
+	}
+
+	&--active {
+		color: black;
+		border-bottom: .25em solid #3f2b96;
+	}
+}
+
+.features {
+	margin-top: 1em;
+	text-align: right;
+
+	&__pending-count {
+		font-size: .95em;
+		color: #cacaca;
+
+		span {
+			color: black;
+			font-weight: bold;
 		}
 	}
 }

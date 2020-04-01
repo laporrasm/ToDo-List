@@ -1,9 +1,79 @@
+Vue.component('addTaskForm', {
+	data() {
+		return {
+			inputValue: ''
+		}
+	},
+
+	template: `
+		<div class="add-task">
+			<input
+				class="add-task__input"
+				type="text"
+				placeholder="Add Task"
+				v-model="inputValue"
+				v-on:keyup.enter="emitTaskInfo()"
+			/>
+			<button v-on:click="emitTaskInfo()" class="add-task__button">
+				<i class="fas fa-plus"></i>
+			</button>
+		</div>
+	`,
+
+	methods: {
+		emitTaskInfo() {
+			if (this.inputValue) { 
+				this.$emit("task-info", {text: this.inputValue})
+				this.inputValue= ''
+			}
+			else alert("You should enter a task first.")
+		}
+	}
+})
+
+Vue.component('taskCard', {
+	data() {
+		return {}
+	},
+
+	props: {
+		// taskId: Number,
+		// taskText: String,
+		// taskState: Boolean,
+
+		taskObject: Object
+	},
+
+	template: `
+		<div class="task" :class="{ 'task--done': taskObject.done }">
+			<div class="task__inner">
+				<div v-on:click="triggerDoneEvent()" class="task__doneButton">
+					<span class="task__doneButton-filler"></span>
+				</div>
+				<p class="task__text">{{taskObject.text}}</p>
+				<div class="task__deleteButton" v-on:click="triggerDeleteEvent()">
+					<i class="fas fa-times-circle"></i>
+				</div>
+			</div>
+		</div>
+	`,
+
+	methods: {
+		triggerDoneEvent() {
+			this.$emit("done-event-triggered", this.taskObject.id)
+		},
+
+		triggerDeleteEvent() {
+			this.$emit("delete-event-triggered", this.taskObject.id)
+		}
+	}
+})
+
 var toDoApp = new Vue({
 	el: "#To-Do-App",
 	data: {
 		tasksList: [],
 		displayCompleted: false,
-		input: ""
 	},
 
 	computed: {
@@ -30,18 +100,14 @@ var toDoApp = new Vue({
 	},
 
 	methods: {
-		addTask() {
-			if (this.input == "") alert("You should enter a task first.");
-			else {
-				this.tasksList.push({
-					id: this.getNewId(),
-					text: this.input,
-					done: false
-				});
+		addTask(taskObject) {
+			this.tasksList.push({
+				id: this.getNewId(),
+				text: taskObject.text,
+				done: false
+			});
 
-				this.input = "";
-				this.updateStorage();
-			}
+			this.updateStorage();
 		},
 
 		deleteTask(id) {
